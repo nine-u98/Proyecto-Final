@@ -1,9 +1,14 @@
+import pandas as pd
+
+
 class Libro():
 
     def __init__(self, csv):
-        self.csv = csv
+        pd.set_option('display.max_rows', None)
+        self.libros = pd.read_csv(csv)  # index_col=0
+
     def listarLibros(self):
-        pass
+        print(self.libros)
 
     def ordenarLibros(self):
         pass
