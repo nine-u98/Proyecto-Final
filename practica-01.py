@@ -1,4 +1,7 @@
 import pandas as pd
+import time
+import sys
+from os import system
 
 
 class Libro():
@@ -11,10 +14,18 @@ class Libro():
         print(self.libros)
 
     def ordenarLibros(self):
-        pass
+        print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
 
-    def buscarLibro(self):
-        pass
+    def buscarLibro(self, cat, search):
+        data = self.libros.columns.tolist()[cat-1]
+        match data:
+            case 'ISBN':
+                dataFrame = self.libros[self.libros['ISBN'] == search]
+                return dataFrame
+            case _:
+                dataFrame = self.libros[self.libros[data].str.contains(search)]
+                return dataFrame
+            
     def buscar_num_Autores(self):
         pass
 
