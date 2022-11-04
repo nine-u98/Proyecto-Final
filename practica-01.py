@@ -39,4 +39,42 @@ if __name__ == '__main__':
             obj = Libro(ruta)
             print("Procesando archivo ...")
             timing()
-     
+
+             if again("Quieres ver opciones "):
+                system('clear')
+                timing()
+                menu()
+                while True:
+                    options = input("=> ")
+
+                    match int(options):
+                        case 1:
+                            obj.listarLibros()
+                            again()
+                        case 2:
+                            obj.agregarLibro()
+                            again()
+                        case 3:
+                            obj.eliminar_libro()
+                            again()
+                        case 4:
+                            modlibros()
+                            obj.listarLibros()
+
+                        case 5:
+                            obj.ordenarLibros()
+                            again()
+                        case 6:
+                            obj.buscar_num_Autores()
+                            again()
+                        case 7:
+                            obj.actualizarLibro()
+                            again()
+                        case 8:
+                            obj.guardaLibro()
+                            again()
+                        case 9:
+                            break
+
+    else:
+        print("ad")
