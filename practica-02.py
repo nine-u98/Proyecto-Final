@@ -3,8 +3,14 @@ import requests
 
 # listar pokemons involucra: nombre, habilidad y URL de la imagen
 class Pokemon:
-    def __init__(self, sel):
-        self.sel = sel
+    def __init__(self):
+        self.urlPokemon = 'https://pokeapi.co/api/v2/pokemon/'
+        self.urlGeneracion = "https://pokeapi.co/api/v2/generation/"
+        self.urlForma = "https://pokeapi.co/api/v2/pokemon-shape/"
+        self.urlHabilidad = "https://pokeapi.co/api/v2/ability/"
+        self.urlHabitat = "https://pokeapi.co/api/v2/pokemon-habitat/"
+        self.urlTipo = "https://pokeapi.co/api/v2/type/"
+        self.__pokeRes = ""
 
     def __pokeSeleccion(self):
         pass
