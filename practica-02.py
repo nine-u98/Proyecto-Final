@@ -21,8 +21,6 @@ class Pokemon:
         pass
 
     def details(self):
-        '''Listar pokemons por tipo. Se deben sugerir
-        opciones a ingresar para interactuar.'''
         pass
 
 
