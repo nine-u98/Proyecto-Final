@@ -10,10 +10,15 @@ class Libro():
 
     def buscarLibro(self):
         pass
-    def buscar_num_Autores(self):
-        pass
+    
+    def buscar_num_autores(self, num):
+        self.numAutores = num
+        dictcc = {}
+        for e, i in enumerate([i for i in self.dt['Autor']]):
+            dictcc[e] = i.count(',') + 1
+        print([self.dt.iloc[[i]] for i in dictcc.keys() if dictcc[i] == self.numAutores])
 
-    def agregarLibro(self):
+    def agregarlibro(self):
         pass
 
     def actualizarLibro(self):
