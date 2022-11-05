@@ -19,7 +19,10 @@ class Libro():
         print([self.dt.iloc[[i]] for i in dictcc.keys() if dictcc[i] == self.numAutores])
 
     def agregarlibro(self):
-        pass
+        indice = [i for i in self.dt.index][-1] + 1
+        for i in list(self.dt.columns.values):
+            x = input(f"Valor a agregar {i} : ")
+            self.dt.loc[indice, i] = x
 
     def actualizarLibro(self):
         pass
