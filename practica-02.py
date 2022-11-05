@@ -11,48 +11,22 @@ class Pokemon:
         self.urlHabitat = "https://pokeapi.co/api/v2/pokemon-habitat/"
         self.urlTipo = "https://pokeapi.co/api/v2/type/"
         self.__pokeRes = ""
-
-    def __pokeSeleccion(self):
-        pass
-    def __conectaAPI(self, url):
-        pass
-
-    def __str__(self) -> None:
+        
+    def __conect(self):
         pass
 
     # * Funcion - obtener los datos de generacion & forma & habilidad
-    def funcion_universal(self):
+    def func_general(self):
         pass
-
-    # ! Eliminar
-    def pokeGeneracion(self):
-        '''Listar pokemons por generación.
-        Se ingresa alguna generación (1, 2, 3, ..)
-        y se listan todos los pokemon respectivos.'''
-        pass
-
-    # ! Eliminar
-    def pokeForma(self):
-        '''Listar pokemons por forma. Se ingresa
-        alguna forma (deben sugerir valores) y se
-        listan todos los pokemons respectivos.'''
-        pass
-
-    # ! Eliminar
-    def pokeHabilidad(self):
-        '''Listar pokemons por habilidad. Se deben
-        sugerir opciones a ingresar para interactuar.'''
-
+    
     def pokeHabitat(self):
         pass
 
-    def pokeDetalles(self, nombre):
+    def pokeTipo(self, nombre):
 
         pass
 
-    def pokeTipo(self):
-        '''Listar pokemons por tipo. Se deben sugerir
-        opciones a ingresar para interactuar.'''
+    def details(self):
         pass
 
 
