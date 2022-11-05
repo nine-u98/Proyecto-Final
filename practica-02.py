@@ -6,8 +6,14 @@ class Pokemon:
     def __init__(self, sel):
         self.sel = sel
 
-    def __pokeSeleccion(self):
-        pass
+    def __conect(self, url):
+        r = requests.get(url)
+        status = r.status_code
+        if status != 200:
+            quit()
+        else:
+            return r.json()
+    
     def __conectaAPI(self, url):
         pass
 
