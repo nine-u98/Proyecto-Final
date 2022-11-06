@@ -57,9 +57,7 @@ class Libro():
     def ordenarLibros(self):
         print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
 
-    def buscarLibro(self):
-        pass
-    
+        
     def buscar_num_autores(self, num):
         self.numAutores = num
         dictcc = {}
@@ -82,8 +80,6 @@ class Libro():
                 dataFrame = self.libros[self.libros[data].str.contains(search)]
                 return dataFrame
             
-    def buscar_num_Autores(self):
-        pass
 
     def agregarLibro(self):
         pass
