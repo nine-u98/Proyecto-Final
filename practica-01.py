@@ -66,11 +66,14 @@ class Libro():
     def actualizarLibro(self):
         pass
 
-    def guardaLibro(self):
-        pass
+    def guardalibro(self):
+        self.dt.to_csv(self.libros, index=False)
+        print("Archivo guardado")
 
-    def eliminar_libro(self):
-        pass
+    def eliminar_libro(self, num): 
+        self.dt.drop(num, inplace=True)
+        self.dt.to_csv(self.libros)
+        print(f"Eliminando")
 
 if __name__ == '__main__':
     if again("Quieres iniciar la lectura de un archivo CSV: "):
