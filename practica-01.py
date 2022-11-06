@@ -57,9 +57,7 @@ class Libro():
     def ordenarLibros(self):
         print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
 
-    def buscarLibro(self):
-        pass
-    
+        
     def buscar_num_autores(self, num):
         self.numAutores = num
         dictcc = {}
@@ -82,20 +80,36 @@ class Libro():
                 dataFrame = self.libros[self.libros[data].str.contains(search)]
                 return dataFrame
             
-    def buscar_num_Autores(self):
-        pass
 
-    def agregarLibro(self):
-        pass
+    def agregarlibro(self):
+        indice = [i for i in self.dt.index][-1] + 1
 
-    def actualizarLibro(self):
-        pass
+        for i in list(self.dt.columns.values):
+            if i.lower() in ['id']:
+                print(int(self.dt['ID'].tail(1)) + 1)
+                self.dt.loc[indice, i] = int(self.dt['ID'].tail(1)) + 1
+            else:
+                x = input(f"Valor a agregar {i} : ")    # input
+                self.dt.loc[indice, i] = x
+        self.guardalibro()
 
-    def guardaLibro(self):
-        pass
+    def actualizarlibro(self):
+        y = int(input("Ingresa el index de la fila : "))   # input
+        for i in list(self.dt.columns.values):
+            if i.lower() == ['id']:
 
-    def eliminar_libro(self):
-        pass
+                self.dt.loc[i, i] = int(self.dt['ID'].tail(1)) + 1
+            x = input(f"Valor a modificar {i} : ")  # input
+            self.dt.loc[y, i] = x
+
+    def guardalibro(self):
+        self.dt.to_csv(self.libros, index=False)
+        print("Archivo guardado")
+
+    def eliminar_libro(self, num): 
+        self.dt.drop(num, inplace=True)
+        self.dt.to_csv(self.libros)
+        print(f"Eliminando")
 
 if __name__ == '__main__':
     pass
