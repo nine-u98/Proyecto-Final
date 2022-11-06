@@ -1,14 +1,35 @@
-import pandas as pd
 import time
-import sys
 from os import system
+import sys
+import pandas as pd
 
-def again(x="Quieres volver al menu? : "):
-    if input(x).lower().strip() in ['s', 'si']:
+def borrar():
+    num = input("Ingresa el numero de la fila a borrar : ")
+    if num.isdecimal():
+        num = int(num)
+        return num
+    else:
+        print("No es un numero")
+def timing():
+    for i in range(10, 0, -1):
+        sys.stdout.write(str('█'))
+        sys.stdout.flush()
+        time.sleep(1)
+    print("\n")
+
+
+def again(x="Quieres volver al menu? [s/n] : "):
+    inpt = input(x).lower().strip() in ['s', 'si']
+    if inpt:
         system('clear')
         if x == "Quieres volver al menu? : ":
             menu()
         return True
+    elif inpt in ['n', 'no']:
+        return False
+    else:
+        print('Valor ingresado desconocido')
+        return False
 
 
 def menu():
@@ -34,52 +55,48 @@ Lista de categorias
 4) Editorial
 5) Autor""")
     cat = int(input('=> '))
+    if cat == 3:
+        print(f"""\
+Estos son los ISBN copia al que quieres buscar        
+{obj.dt["ISBN"]}""")
 
     if 6 > cat >= 1:
         search = input("Texto a buscar : ")
-        print(obj.buscarLibro(cat, search))
-def timing():
-    for i in range(10, 0, -1):
-        sys.stdout.write(str('%') + ' ')
-        sys.stdout.flush()
-        time.sleep(1)
-    print("\n")
+        print(obj.buscarlibro(cat, search))
+
 
 class Libro():
-
     def __init__(self, csv):
+        self.libros = csv
         pd.set_option('display.max_rows', None)
-        self.libros = pd.read_csv(csv)  # index_col=0
+        self.dt = pd.read_csv(self.libros)  # index_col=0
+        self.dt['ID'] = self.dt['ID'].astype(str).replace('\.0', '', regex=True)
 
-    def listarLibros(self):
-        print(self.libros)
+    def listarlibros(self):
+        print(self.dt)
 
-    def ordenarLibros(self):
-        print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
+    def ordenarlibros(self):
+        print(self.dt.sort_values(by="Titulo", ascending=True).head(8))
 
-        
+    def buscarlibro(self, cat, search):
+        if cat in self.dt.columns.values:           # Verificar funcionamiento
+            data = self.dt.columns.tolist()[cat - 1]
+            match data:
+                case 'ISBN':
+                    dataFrame = self.dt[self.dt['ISBN'] == int(search)]
+                    return dataFrame
+                case _:
+                    dataFrame = self.dt[self.dt[data].str.contains(search)]
+                    return dataFrame
+        else:
+            print("No esta en las categorias")
+
     def buscar_num_autores(self, num):
         self.numAutores = num
         dictcc = {}
         for e, i in enumerate([i for i in self.dt['Autor']]):
             dictcc[e] = i.count(',') + 1
         print([self.dt.iloc[[i]] for i in dictcc.keys() if dictcc[i] == self.numAutores])
-
-    def agregarlibro(self):
-        indice = [i for i in self.dt.index][-1] + 1
-        for i in list(self.dt.columns.values):
-            x = input(f"Valor a agregar {i} : ")
-            self.dt.loc[indice, i] = x
-    def buscarLibro(self, cat, search):
-        data = self.libros.columns.tolist()[cat-1]
-        match data:
-            case 'ISBN':
-                dataFrame = self.libros[self.libros['ISBN'] == search]
-                return dataFrame
-            case _:
-                dataFrame = self.libros[self.libros[data].str.contains(search)]
-                return dataFrame
-            
 
     def agregarlibro(self):
         indice = [i for i in self.dt.index][-1] + 1
@@ -106,56 +123,56 @@ class Libro():
         self.dt.to_csv(self.libros, index=False)
         print("Archivo guardado")
 
-    def eliminar_libro(self, num): 
+    def eliminar_libro(self, num): # validar q num este en el rango de los indices
         self.dt.drop(num, inplace=True)
         self.dt.to_csv(self.libros)
         print(f"Eliminando")
 
 if __name__ == '__main__':
-    pass
-
     if again("Quieres iniciar la lectura de un archivo CSV: "):
         ruta = input(r"Ingresa una ruta absoluta de la ubicacion de tu CSV sin la extension : ") + ".csv"
         if ruta:
             obj = Libro(ruta)
             print("Procesando archivo ...")
-            timing()
-
-             if again("Quieres ver opciones "):
-                system('clear')
-                timing()
-                menu()
+            #timing()
+            if again("Quieres ver opciones "):
                 while True:
+                    menu()
                     options = input("=> ")
-
                     match int(options):
                         case 1:
-                            obj.listarLibros()
+                            obj.listarlibros()
                             again()
                         case 2:
-                            obj.agregarLibro()
+                            obj.agregarlibro()
                             again()
                         case 3:
-                            obj.eliminar_libro()
+                            obj.listarlibros()
+                            obj.eliminar_libro(borrar())
                             again()
                         case 4:
                             modlibros()
-                            obj.listarLibros()
-
+                            again()
                         case 5:
-                            obj.ordenarLibros()
+                            obj.ordenarlibros()
                             again()
                         case 6:
-                            obj.buscar_num_Autores()
+                            numAutores = int(input("Ingresa un numero de autores a buscar : "))
+                            obj.buscar_num_autores(numAutores)
                             again()
                         case 7:
-                            obj.actualizarLibro()
+                            obj.listarlibros()
+                            obj.actualizarlibro()
                             again()
                         case 8:
-                            obj.guardaLibro()
+                            obj.guardalibro()
                             again()
                         case 9:
+                            print("Hasta la proxima!")
                             break
+                        case _:
+                            print("Selecciona una de las opciones permitidas")
+                            time.sleep(1)
 
     else:
-        print("ad")
+        print("Hasta la proxima!")
