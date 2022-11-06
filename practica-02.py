@@ -56,4 +56,32 @@ class Pokemon:
 
 
 if __name__ == '__main__':
-    pass
+    obj = Pokemon()
+    while True:
+        print("""\
+"OPCIONES A SELECCIONAR:
+
+1) Listar por generación.
+2) Listar por forma.
+3) Listar por habilidad.
+4) listar por habitat.
+5) Listar por tipo.""")
+        options = input("Ingresar número de la opción a listar: ").strip()
+        match options:
+            case '1':
+                obj.poke_generacion()
+                break
+            case '2':
+                obj.pokeforma()
+                break
+            case '3':
+                obj.pokehabilidad()
+                break
+            case '4':
+                obj.pokeHabitat()
+                break
+            case '5':
+                obj.poketype()
+                break
+            case _:
+                print("Debe ingresar un número entre el 1 al 6.")
