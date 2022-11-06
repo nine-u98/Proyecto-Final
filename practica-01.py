@@ -70,11 +70,26 @@ class Libro():
     def buscar_num_Autores(self):
         pass
 
-    def agregarLibro(self):
-        pass
+    def agregarlibro(self):
+        indice = [i for i in self.dt.index][-1] + 1
 
-    def actualizarLibro(self):
-        pass
+        for i in list(self.dt.columns.values):
+            if i.lower() in ['id']:
+                print(int(self.dt['ID'].tail(1)) + 1)
+                self.dt.loc[indice, i] = int(self.dt['ID'].tail(1)) + 1
+            else:
+                x = input(f"Valor a agregar {i} : ")    # input
+                self.dt.loc[indice, i] = x
+        self.guardalibro()
+
+    def actualizarlibro(self):
+        y = int(input("Ingresa el index de la fila : "))   # input
+        for i in list(self.dt.columns.values):
+            if i.lower() == ['id']:
+
+                self.dt.loc[i, i] = int(self.dt['ID'].tail(1)) + 1
+            x = input(f"Valor a modificar {i} : ")  # input
+            self.dt.loc[y, i] = x
 
     def guardaLibro(self):
         pass
