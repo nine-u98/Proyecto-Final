@@ -57,6 +57,21 @@ class Libro():
     def ordenarLibros(self):
         print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
 
+    def buscarLibro(self):
+        pass
+    
+    def buscar_num_autores(self, num):
+        self.numAutores = num
+        dictcc = {}
+        for e, i in enumerate([i for i in self.dt['Autor']]):
+            dictcc[e] = i.count(',') + 1
+        print([self.dt.iloc[[i]] for i in dictcc.keys() if dictcc[i] == self.numAutores])
+
+    def agregarlibro(self):
+        indice = [i for i in self.dt.index][-1] + 1
+        for i in list(self.dt.columns.values):
+            x = input(f"Valor a agregar {i} : ")
+            self.dt.loc[indice, i] = x
     def buscarLibro(self, cat, search):
         data = self.libros.columns.tolist()[cat-1]
         match data:
@@ -83,7 +98,6 @@ class Libro():
         pass
 
 if __name__ == '__main__':
-
     pass
 
     if again("Quieres iniciar la lectura de un archivo CSV: "):
