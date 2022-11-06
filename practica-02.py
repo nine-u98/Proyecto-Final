@@ -29,9 +29,19 @@ class Pokemon:
         if status != 200:
             quit()
 
-    # * Funcion - obtener los datos de generacion & forma & habilidad
-    def func_general(self):
-        pass
+    def pokehabilidad(self):
+        data = self.__conect(self.urlHabilidad)
+        lista: list = [i['name'] for i in data["results"]]
+        for index, item in enumerate(lista, 1):
+            print(f'{index}) {item.capitalize()}')
+        res = ""
+        while res not in range(1, len(lista) + 1):
+            res = int(input("Ingresa un número comprendido en la lista: "))
+        listpokemon = self.__conect(self.urlHabilidad + (str(res)))
+
+        for i in range(len(listpokemon['pokemon'])):  # cambiar para mostrar menos
+            nomPokemon = listpokemon['pokemon'][i]["pokemon"]["name"]
+            self.details(nomPokemon)
     
     def pokeHabitat(self):
         pass
