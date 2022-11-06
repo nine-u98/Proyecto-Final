@@ -3,7 +3,7 @@ PARTICIPANTES:
 - Quintanilla Chacon David Alejandro
 - Zuñiga Vasquez Pedro Armando
 
-Tarea 1
+## Tarea 1
 Se tiene la clase Libro con los siguientes atributos: id, título, género, ISBN, editorialy autor(es). Considere que un libro puede tener varios autores.
 
 Se solicita escribir un programa en Python que permita registrar libros. Debe utilizar: colecciones (listas, tuplas, etc), funciones y clases de Python.
@@ -22,7 +22,7 @@ Opción 9: Editar o actualizar datos de un libro (título, género, ISBN, editor
 Opción 10: Guardar libros en archivo de disco duro (.txt o csv).
 Nota : listar libros involucra: título, género, ISBN, editorial y autor(es)
 
-Tarea 2
+## Tarea 2
 La tarea gira en torno a la PokeAPI: https://pokeapi.co/docs/v2 utilizar la API v2 y el paquete requests de Python
 
 Escribir un programa que tenga las siguientes opciones:
