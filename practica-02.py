@@ -1,114 +1,57 @@
 import requests
+import time
+from os import system
 
- 
 
-# listar pokemons involucra: nombre, habilidad y URL de la imagen
 class Pokemon:
     def __init__(self):
-        pass
-        
-    def __conect(self):
-        pass
         self.urlPokemon = 'https://pokeapi.co/api/v2/pokemon/'
         self.urlGeneracion = "https://pokeapi.co/api/v2/generation/"
         self.urlForma = "https://pokeapi.co/api/v2/pokemon-shape/"
         self.urlHabilidad = "https://pokeapi.co/api/v2/ability/"
         self.urlHabitat = "https://pokeapi.co/api/v2/pokemon-habitat/"
         self.urlTipo = "https://pokeapi.co/api/v2/type/"
-        self.__pokeRes = ""
-        
-    def __conect(self):
 
-
-    def conect(self):
-        pass
-        
-    def __conect(self, url):
+    def __conect(self, url: str):
         r = requests.get(url)
         status = r.status_code
         if status != 200:
             quit()
-
-
-    def pokehabilidad(self):
-        data = self.__conect(self.urlHabilidad)
-        lista: list = [i['name'] for i in data["results"]]
-
-         else:
+        else:
             return r.json()
-    def poke_generacion(self):
-        pokeRes = self.__conect(self.urlGeneracion)
-        lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
-        print("Selecciona una opcion")
 
-        for index, item in enumerate(lista, 1):
-            print(f'{index}) {item.capitalize()}')
-        res = ""
-        while res not in range(1, len(lista) + 1):
-            res = int(input("Ingresa un número comprendido en la lista: "))
+    def all_pokemons(self, types: str):
+        if types:
+            pokeRes = self.__conect(types)
+            if types == self.urlHabilidad or types == self.urlTipo:
+                lista: list = [i['name'] for i in pokeRes["results"]]
+            else:
+                lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
+            print("Selecciona una opcion")
+            for index, item in enumerate(lista, 1):
+                print(f'{index}) {item.capitalize()}')
+            res = ""
+            while res not in range(1, len(lista) + 1):
+                res = int(input("Ingresa un número comprendido en la lista: "))
+                if res == 19:
+                    print("Pokemon no encontrado")
+            listpokemon = self.__conect(types + (str(res)))
+            if types == self.urlHabilidad or types == self.urlTipo:
+                for i in range(len(listpokemon["pokemon"])):
+                    nomPokemon = listpokemon["pokemon"][int(i)]["pokemon"]["name"]
+                    self.details(nomPokemon)
+            else:
+                for i in range(len(listpokemon["pokemon_species"])):
+                    nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
+                    self.details(nomPokemon)
 
-        listpokemon = self.__conect(self.urlHabilidad + (str(res)))
-
-        for i in range(len(listpokemon['pokemon'])):  # cambiar para mostrar menos
-            nomPokemon = listpokemon['pokemon'][i]["pokemon"]["name"]
-
-        listpokemon = self.__conect(self.urlGeneracion + (str(res)))
-        for i in range(len(listpokemon["pokemon_species"])):  # cambiar para mostrar menos
-            nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
-
-            self.details(nomPokemon)
-    
-    def pokeforma(self):
-        pokeRes = self.__conect(self.urlForma)
-        lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
-        print("Selecciona una opcion")
-        for index, item in enumerate(lista, 1):
-            print(f'{index}) {item.capitalize()}')
-        res = ""
-        while res not in range(1, len(lista) + 1):
-            res = int(input("Ingresa un número comprendido en la lista: "))
-        listpokemon = self.__conect(self.urlForma + (str(res)))
-        for i in range(len(listpokemon["pokemon_species"])):  # cambiar para mostrar menos
-            nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
-            self.details(nomPokemon)
-    def pokeHabitat(self):
-        pokeRes = self.__conect(self.urlHabitat)
-        lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
-        print("Selecciona una opcion")
-        for index, item in enumerate(lista, 1):
-            print(f'{index}) {item.capitalize()}')
-        res = ""
-        while res not in range(1, len(lista) + 1):
-            res = int(input("Ingresa un número comprendido en la lista: "))
-        listpokemon = self.__conect(self.urlHabitat + (str(res)))
-
-        for i in range(len(listpokemon["pokemon_species"])):  # cambiar para mostrar menos
-            nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
-            self.details(nomPokemon)
-
-    def poketype(self):
-        pk_resp = self.__conect(self.urlTipo)
-        lista = [pk_resp["results"][i]["name"] for i in range(int(pk_resp["count"]))]
-        print("Selecciona una opcion")
-        for index, item in enumerate(lista, 1):
-            print(f'{index}) {item.capitalize()}')
-        res = ""
-        while res not in range(1, len(lista) + 1):
-            res = int(input("Ingresa un número comprendido en la lista: "))
-            if res == 19:
-                res = 10001
-                print("No hay ningún Pokemón agregado a esta lista.")
-            elif res == 20:
-                res = 10002
-                print("No hay ningún Pokemón agregado a esta lista.")
-            listpokemon = self.__conect(self.urlTipo + (str(res)))
-
-            for i in range(len(listpokemon["pokemon"])):  # cambiar para mostrar menos
-                nomPokemon = listpokemon["pokemon"][int(i)]["pokemon"]["name"]
-                self.details(nomPokemon)
-    def details(self):
-        pass
-
+    def details(self, nombre):
+        infopokemon = self.__conect(self.urlPokemon + nombre)
+        print(nombre.upper())
+        print("\tImagen: ", infopokemon['sprites']['front_default'])
+        print("\tHabilidades:")
+        for j in infopokemon["abilities"]:
+            print("\t\t*", j["ability"]["name"].capitalize())
 
 
 if __name__ == '__main__':
@@ -125,19 +68,20 @@ if __name__ == '__main__':
         options = input("Ingresar número de la opción a listar: ").strip()
         match options:
             case '1':
-                obj.poke_generacion()
+                obj.all_pokemons(obj.urlGeneracion)
                 break
             case '2':
-                obj.pokeforma()
+                obj.all_pokemons(obj.urlForma)
                 break
             case '3':
-                obj.pokehabilidad()
+                obj.all_pokemons(obj.urlHabilidad)
                 break
             case '4':
-                obj.pokeHabitat()
-                break
+                obj.all_pokemons(obj.urlHabitat)
             case '5':
-                obj.poketype()
+                obj.all_pokemons(obj.urlTipo)
                 break
             case _:
                 print("Debe ingresar un número entre el 1 al 6.")
+                time.sleep(1)
+                system('clear')
