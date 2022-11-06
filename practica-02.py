@@ -5,6 +5,8 @@ import requests
 # listar pokemons involucra: nombre, habilidad y URL de la imagen
 class Pokemon:
     def __init__(self):
+
+    def conect(self):
         pass
         
     def __conect(self, url):
