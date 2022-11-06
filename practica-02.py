@@ -58,12 +58,40 @@ class Pokemon:
             nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
             self.details(nomPokemon)
     def pokeHabitat(self):
-        pass
+        pokeRes = self.__conect(self.urlHabitat)
+        lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
+        print("Selecciona una opcion")
+        for index, item in enumerate(lista, 1):
+            print(f'{index}) {item.capitalize()}')
+        res = ""
+        while res not in range(1, len(lista) + 1):
+            res = int(input("Ingresa un número comprendido en la lista: "))
+        listpokemon = self.__conect(self.urlHabitat + (str(res)))
 
-    def pokeTipo(self, nombre):
+        for i in range(len(listpokemon["pokemon_species"])):  # cambiar para mostrar menos
+            nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
+            self.details(nomPokemon)
 
-        pass
+    def poketype(self):
+        pk_resp = self.__conect(self.urlTipo)
+        lista = [pk_resp["results"][i]["name"] for i in range(int(pk_resp["count"]))]
+        print("Selecciona una opcion")
+        for index, item in enumerate(lista, 1):
+            print(f'{index}) {item.capitalize()}')
+        res = ""
+        while res not in range(1, len(lista) + 1):
+            res = int(input("Ingresa un número comprendido en la lista: "))
+            if res == 19:
+                res = 10001
+                print("No hay ningún Pokemón agregado a esta lista.")
+            elif res == 20:
+                res = 10002
+                print("No hay ningún Pokemón agregado a esta lista.")
+            listpokemon = self.__conect(self.urlTipo + (str(res)))
 
+            for i in range(len(listpokemon["pokemon"])):  # cambiar para mostrar menos
+                nomPokemon = listpokemon["pokemon"][int(i)]["pokemon"]["name"]
+                self.details(nomPokemon)
     def details(self):
         pass
 
