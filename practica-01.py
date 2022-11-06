@@ -1,7 +1,7 @@
-import sys
-from os import system
 import pandas as pd
 import time
+import sys
+from os import system
 
 def again(x="Quieres volver al menu? : "):
     if input(x).lower().strip() in ['s', 'si']:
@@ -48,15 +48,25 @@ def timing():
 class Libro():
 
     def __init__(self, csv):
-        self.csv = csv
+        pd.set_option('display.max_rows', None)
+        self.libros = pd.read_csv(csv)  # index_col=0
+
     def listarLibros(self):
-        pass
+        print(self.libros)
 
     def ordenarLibros(self):
-        pass
+        print(self.libros.sort_values(by="Titulo", ascending=True).head(8))
 
-    def buscarLibro(self):
-        pass
+    def buscarLibro(self, cat, search):
+        data = self.libros.columns.tolist()[cat-1]
+        match data:
+            case 'ISBN':
+                dataFrame = self.libros[self.libros['ISBN'] == search]
+                return dataFrame
+            case _:
+                dataFrame = self.libros[self.libros[data].str.contains(search)]
+                return dataFrame
+            
     def buscar_num_Autores(self):
         pass
 
@@ -73,6 +83,9 @@ class Libro():
         pass
 
 if __name__ == '__main__':
+
+    pass
+
     if again("Quieres iniciar la lectura de un archivo CSV: "):
         ruta = input(r"Ingresa una ruta absoluta de la ubicacion de tu CSV sin la extension : ") + ".csv"
         if ruta:
