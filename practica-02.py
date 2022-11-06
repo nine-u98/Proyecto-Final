@@ -1,5 +1,6 @@
 import requests
 
+ 
 
 # listar pokemons involucra: nombre, habilidad y URL de la imagen
 class Pokemon:
@@ -13,7 +14,16 @@ class Pokemon:
         self.__pokeRes = ""
         
     def __conect(self):
+
+
+    def conect(self):
         pass
+        
+    def __conect(self, url):
+        r = requests.get(url)
+        status = r.status_code
+        if status != 200:
+            quit()
 
     # * Funcion - obtener los datos de generacion & forma & habilidad
     def func_general(self):
