@@ -14,10 +14,21 @@ class Pokemon:
         status = r.status_code
         if status != 200:
             quit()
-
-    # * Funcion - obtener los datos de generacion & forma & habilidad
-    def func_general(self):
-        pass
+         else:
+            return r.json()
+    def poke_generacion(self):
+        pokeRes = self.__conect(self.urlGeneracion)
+        lista = [pokeRes["results"][i]["name"] for i in range(int(pokeRes["count"]))]
+        print("Selecciona una opcion")
+        for index, item in enumerate(lista, 1):
+            print(f'{index}) {item.capitalize()}')
+        res = ""
+        while res not in range(1, len(lista) + 1):
+            res = int(input("Ingresa un número comprendido en la lista: "))
+        listpokemon = self.__conect(self.urlGeneracion + (str(res)))
+        for i in range(len(listpokemon["pokemon_species"])):  # cambiar para mostrar menos
+            nomPokemon = listpokemon["pokemon_species"][int(i)]["name"]
+            self.details(nomPokemon)
     
     def pokeHabitat(self):
         pass
