@@ -79,8 +79,8 @@ class Libro():
         print(self.dt.sort_values(by="Titulo", ascending=True).head(8))
 
     def buscarlibro(self, cat, search):
-        if cat in self.dt.columns.values:           # Verificar funcionamiento
-            data = self.dt.columns.tolist()[cat - 1]
+        if cat in [1,2,3,4,5]:
+            data = self.dt.columns.tolist()[cat]
             match data:
                 case 'ISBN':
                     dataFrame = self.dt[self.dt['ISBN'] == int(search)]
